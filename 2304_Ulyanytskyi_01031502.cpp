@@ -45,18 +45,18 @@ public:
 class Checker_Normal : public Checker {
 public:
     bool check_move(const string& current_position, const string& new_position) const override {
-        int diff_col = abs(new_position[0] - current_position[0]);
         int diff_row = new_position[1] - current_position[1];
-        return diff_col == 1 && diff_row == 1;
+        int diff_col = abs(new_position[0] - current_position[0]);        
+        return diff_row == 1 && diff_col == 1;
     }
 };
 
 class Checker_King : public Checker {
 public:
     bool check_move(const string& current_position, const string& new_position) const override {
-        short diff_col = abs(new_position[0] - current_position[0]);
         short diff_row = abs(new_position[1] - current_position[1]);
-        return diff_col == diff_row;
+        short diff_col = abs(new_position[0] - current_position[0]);        
+        return diff_row == diff_col;
     }
 };
 
