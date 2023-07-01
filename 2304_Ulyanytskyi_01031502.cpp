@@ -38,6 +38,10 @@ void display_game_field(vector<string>& field) {
 }
 
 class Checker {
+protected:
+    virtual bool is_inside_board(char col, char row) const final {
+        return col >= 'a' && col <= 'h' && row >= '1' && row <= '8';
+    }
 public:
     virtual bool check_move(const string& current_position, const string& new_position) const = 0;
 };
@@ -45,6 +49,14 @@ public:
 class Checker_Normal : public Checker {
 public:
     bool check_move(const string& current_position, const string& new_position) const override {
+        bool current_col_and_row = is_inside_board(current_position[0], current_position[1]);
+        bool new_col_and_row = is_inside_board(new_position[0], new_position[1]);
+
+        if (!current_col_and_row || !new_col_and_row) {
+            cout << "Position is out of game field!\n";
+            return false;
+        }
+
         int diff_row = new_position[1] - current_position[1];
         int diff_col = abs(new_position[0] - current_position[0]);        
         return diff_row == 1 && diff_col == 1;
@@ -54,8 +66,16 @@ public:
 class Checker_King : public Checker {
 public:
     bool check_move(const string& current_position, const string& new_position) const override {
+        bool current_col_and_row = is_inside_board(current_position[0], current_position[1]);
+        bool new_col_and_row = is_inside_board(new_position[0], new_position[1]);
+
+        if (!current_col_and_row || !new_col_and_row) {
+            cout << "Position is out of game field!\n";
+            return false;
+        }
+
         short diff_row = abs(new_position[1] - current_position[1]);
-        short diff_col = abs(new_position[0] - current_position[0]);        
+        short diff_col = abs(new_position[0] - current_position[0]);
         return diff_row == diff_col;
     }
 };
@@ -114,7 +134,7 @@ int main() {
             }
             else {
                 cout << "Invalid move.\n\n";
-            }                
+            }
 
             break;
         default:
