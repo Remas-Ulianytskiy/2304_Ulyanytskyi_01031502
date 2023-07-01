@@ -42,6 +42,7 @@ protected:
     virtual bool is_inside_board(char col, char row) const final {
         return col >= 'a' && col <= 'h' && row >= '1' && row <= '8';
     }
+
 public:
     virtual bool check_move(const string& current_position, const string& new_position) const = 0;
 };
@@ -85,8 +86,8 @@ int main() {
     bool exit_status = false;
     vector<string> game_field;
 
-    Checker_Normal ñhecker_normal;
-    Checker_King ñhecker_king;
+    Checker_Normal checker_normal;
+    Checker_King checker_king;
 
     fill_game_field(game_field);
 
@@ -113,14 +114,13 @@ int main() {
             cout << "Set new position: ";
             new_position = get_user_input<string>();
 
-            if (ñhecker_normal.check_move(current_position, new_position)) {
+            if (checker_normal.check_move(current_position, new_position)) {
                 cout << "From " << current_position << " to ";
                 cout << new_position << " is possible move for Checker_Normal.\n\n";
             }
             else {
                 cout << "Invalid move.\n\n";
             }
-
             break;
         case 3:
             cout << "Set current position: ";
@@ -128,14 +128,13 @@ int main() {
             cout << "Set new position: ";
             new_position = get_user_input<string>();
 
-            if (ñhecker_king.check_move(current_position, new_position)) {
+            if (checker_king.check_move(current_position, new_position)) {
                 cout << "From " << current_position << " to ";
                 cout << new_position << " is possible move for Checker_King.\n\n";
             }
             else {
                 cout << "Invalid move.\n\n";
             }
-
             break;
         default:
             cout << "Invalid input!\n\n";
